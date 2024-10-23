@@ -38,7 +38,7 @@ node {
     }
     
      stage('checkout git') {
-         git 'https://github.com/shubhamkushwah123/insurance-project-demo.git'
+         git 'https://github.com/jitinkrishna/capstone-assess.git'
     }
     
     stage('deploy to prod') {
