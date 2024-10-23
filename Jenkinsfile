@@ -1,36 +1,34 @@
 node {
     
     stage('checkout git') {
-     // git 'https://github.com/shubhamkushwah123/insurance-project-demo.git'
+     git 'https://github.com/jitinkrishna/capstone-assess.git'
     }
     
     stage('maven build') {
-      //sh 'mvn clean package'
+      sh 'mvn clean package'
     }
     
     stage('containerize') {
-      //sh 'docker build -t jitinkrishna3/insure-me:1.0 .'
+      sh 'docker build -t jitinkrishna3/insure-me:1.0 .'
     }
     
     stage('release') {
-       // withCredentials([string(credentialsId: 'dockerHubpwd', variable: 'dockerHubpwd')]) {
-       // sh "docker login -u jitinkrishna3 -p ${dockerHubpwd}"
-       // sh "docker push jitinkrishna3/insure-me:1.0"
-        //}
-       // sh 'docker login -u "shubhamkushwah123" -p '
-       // sh 'docker push shubhamkushwah/insure-me:1.0'
+       withCredentials([string(credentialsId: 'dockerHubpwd', variable: 'dockerHubpwd')]) {
+       sh "docker login -u jitinkrishna3 -p ${dockerHubpwd}"
+       sh "docker push jitinkrishna3/insure-me:1.0"
+        }
     }
     
     stage('deploy to test') {
-      // ansiblePlaybook become: true, credentialsId: 'ansible-key', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'configure-test-server.yml', vaultTmpPath: ''
+      ansiblePlaybook become: true, credentialsId: 'ansible-key', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'configure-test-server.yml', vaultTmpPath: ''
     }
     
     stage('Regression testing') {
-    // git 'https://github.com/shubhamkushwah123/my-selenium-test-app.git'
+    git 'https://github.com/shubhamkushwah123/my-selenium-test-app.git'
     }
     
     stage('build script'){
-    //    sh 'mvn clean package assembly:single'
+        sh 'mvn clean package assembly:single'
     }
     
     stage('execute selenium Test script'){
